@@ -1,14 +1,31 @@
 import React, {Component} from 'react';
-
+import {BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 
 class TodoApp extends Component{
     render(){
         return (
             <div className="TodoApp">
-                <LoginComponent/>
+                <Router>
+                    <Switch>
+                        <Route path="/" exact component={LoginComponent}/>   
+                        <Route path="/login" component={LoginComponent}/>
+                        <Route path="/welcome/:name" component={WelcomeComponent}/>
+                        <Route path="" component={ErrorComponent}/>
+                    </Switch>
+                </Router>
             </div>
         )
     }
+}
+
+class WelcomeComponent extends Component{
+    render(){
+        return <div>Welcome {this.props.match.params.name}</div>
+    }
+}
+
+function ErrorComponent(){
+    return <div>An Error Ocuured. Page Not found!</div>
 }
 
 class LoginComponent extends Component{
@@ -16,11 +33,11 @@ class LoginComponent extends Component{
         super(props);
         this.state = {
             username : 'harsh',
-            password : ''
+            password : '',
+            hasLoginFailed  : false,
+            showSuccess : false
         }
 
-        // this.handlerUsernameChange = this.handlerUsernameChange.bind(this);
-        // this.handlerPasswordChange = this.handlerPasswordChange.bind(this);
         this.handleChange = this.handleChange.bind(this);
         this.loginClicked = this.loginClicked.bind(this);
     }
@@ -33,37 +50,26 @@ class LoginComponent extends Component{
         )
     }
 
-    // handlerUsernameChange(event){
-    //     this.setState(
-    //         {
-    //             username: event.target.value
-    //         }
-    //     )
-    // }
-    // handlerPasswordChange(event){
-    //     this.setState(
-    //         {
-    //             password: event.target.value
-    //         }
-    //     )
-    // }
-
     loginClicked(){
         //harsh,harsh
         if(this.state.username==="harsh" && this.state.password==="harsh"){
+            this.props.history.push(`/welcome/${this.state.username}`)
             console.log("s");
+            //this.setState({showSuccess:true})
+            //this.setState({hasLoginFailed:false})
         }
         else{
             console.log("f");
+            this.setState({showSuccess:false})
+            this.setState({hasLoginFailed:true})
         }
-        //console.log(this.state);
     }
 
     render(){
         return(
            <div>
-               <div>Invalid Credentials</div>
-               <div>Login Successfully</div>
+               {this.state.hasLoginFailed && <div>Invalid Credentials</div>}
+               {this.state.showSuccess && <div>Login Successfully</div>}
                 Username: <input type="text" name="username" value={this.state.username} onChange={this.handleChange}/>
                 Password: <input type="password" name="password" value={this.state.password} onChange={this.handleChange}/>
                 <button onClick={this.loginClicked}>Login</button>
@@ -71,5 +77,4 @@ class LoginComponent extends Component{
         );
     }
 }
-
 export default TodoApp;
