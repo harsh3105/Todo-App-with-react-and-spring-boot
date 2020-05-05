@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import './bootstrap.css'
 import FirstComponent from './components/learning-examples/FirstComponent'
 import SecondComponent from './components/learning-examples/SecondComponent'
 import Counter from './components/counter/Counter'
