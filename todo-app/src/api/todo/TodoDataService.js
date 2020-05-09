@@ -1,25 +1,25 @@
 import axios from 'axios';
 
 class TodoDataService{
-
+    
     retrieveAlltodos(name){
-        return axios.get(`http://localhost:8080/users/${name}/todos`)
+        return axios.get(`http://localhost:8080/jpa/users/${name}/todos`)
     }
 
     deleteTodo(name,id){
-        return axios.delete(`http://localhost:8080/users/${name}/todos/${id}`);
+        return axios.delete(`http://localhost:8080/jpa/users/${name}/todos/${id}`)
     }
 
     retrievetodos(name,id){
-        return axios.get(`http://localhost:8080/users/${name}/todos/${id}`)
+        return axios.get(`http://localhost:8080/jpa/users/${name}/todos/${id}`)
     }
 
     updateTodo(name,id,todo){
-        return axios.put(`http://localhost:8080/users/${name}/todos/${id}`,todo)
+        return axios.put(`http://localhost:8080/jpa/users/${name}/todos/${id}`,todo)
     }
 
     createTodo(name,todo){
-        return axios.post(`http://localhost:8080/users/${name}/todos/`,todo)
+        return axios.post(`http://localhost:8080/jpa/users/${name}/todos/`,todo)
     }
 
 }
